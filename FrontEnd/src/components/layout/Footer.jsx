@@ -7,7 +7,7 @@ function Footer() {
         <footer className="bg-white border-t border-gray-200 py-4 px-6">
             <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
                 <div className="text-gray-600 text-sm mb-2 sm:mb-0">
-                    &copy {currentYear} StockMaster. All rights reserved.
+                    &copy; {currentYear} StockMaster. All rights reserved.
                 </div>
                 
                 <div className="flex items-center space-x-6"></div>

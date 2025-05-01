@@ -43,24 +43,31 @@ npm install
 npm run dev
 ```
 
-## 🌐 BackEnd ()
+## 🌐 BackEnd (Node js, Laravel, MongoDB, MySql)
 
 ### 🧑🌐 BackEnd Responsibilities
 
-**Tech Stack**:   
+**Tech Stack**: 
 **Developer**: Mona
 
 **Features**:
 -
 
-**Tech Stack**:   
+**Tech Stack**: 
 **Developer**: Nadia
 
 **Features**:
 -
 
-**Tech Stack**:   
+**Tech Stack**: Authentification
 **Developer**: Bouzouggar Abdelhak
 
 **Features**:
--
+- Authentication (Login/Register with token handling)
+
+```bash
+git clone https://github.com/AbdelhakBouzouggar/StockMaster.git
+cd Authentification-Service
+npm install
+npm start
+```

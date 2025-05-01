@@ -3,6 +3,7 @@ import { HiTrendingUp, HiArchive, HiShoppingCart, HiExclamationCircle, HiArrowUp
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement } from 'chart.js'
 import { Bar, Doughnut, Line } from 'react-chartjs-2'
 import { motion } from 'framer-motion'
+import Notification from '../components/ui/Notification'
 
 ChartJS.register(
     CategoryScale, 
@@ -17,6 +18,9 @@ ChartJS.register(
 )
 
 function Dashboard() {
+    const [userName, setUserName] = useState("")
+    const [showNotification, setShowNotification] = useState(false)
+
     const [stats, setStats] = useState({
         totalProducts: 156,
         totalOrders: 35,
@@ -97,6 +101,18 @@ function Dashboard() {
             transition: { type: 'spring', stiffness: 100 }
         }
     }
+
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user"))
+        const notificationDismissed = localStorage.getItem("welcomeNotificationDismissed")
+
+        if (storedUser && storedUser.username) {
+            setUserName(storedUser.username)
+            if (!notificationDismissed) {
+                setShowNotification(true)
+            }
+        }
+    }, [])
     
     return (
         <motion.div
@@ -107,8 +123,20 @@ function Dashboard() {
         >
             <div className="mb-6">
                 <h1 className="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
-                <p className="text-gray-600">Welcome back! Here's what's happening with your inventory today.</p>
+                <p className="text-gray-600">Welcome back Mr. <strong>{userName}</strong>! Here's what's happening with your inventory today.</p>
             </div>
+            
+            {showNotification && (
+                <Notification 
+                    type="success" 
+                    message={`Welcome, ${userName}!`} 
+                    duration={4000} 
+                    onClose={() => {
+                        setShowNotification(false)
+                        localStorage.setItem("welcomeNotificationDismissed", "true")
+                    }} 
+                />
+            )}
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <motion.div 
@@ -120,7 +148,7 @@ function Dashboard() {
                             <p className="text-sm font-medium text-gray-500">Total Products</p>
                             <h3 className="text-3xl font-bold text-gray-800">{stats.totalProducts}</h3>
                         </div>
-                        <div className="bg-blue-100 p-3 rounded-full">
+                        <div className="bg-blue-100 p-5 rounded-full">
                             <HiArchive className="h-6 w-6 text-blue-500" />
                         </div>
                     </div>
@@ -140,7 +168,7 @@ function Dashboard() {
                             <p className="text-sm font-medium text-gray-500">Total Orders</p>
                             <h3 className="text-3xl font-bold text-gray-800">{stats.totalOrders}</h3>
                         </div>
-                        <div className="bg-green-100 p-3 rounded-full">
+                        <div className="bg-green-100 p-5 rounded-full">
                             <HiShoppingCart className="h-6 w-6 text-green-500" />
                         </div>
                     </div>
@@ -160,7 +188,7 @@ function Dashboard() {
                             <p className="text-sm font-medium text-gray-500">Low Stock Items</p>
                             <h3 className="text-3xl font-bold text-gray-800">{stats.lowStockItems}</h3>
                         </div>
-                        <div className="bg-yellow-100 p-3 rounded-full">
+                        <div className="bg-yellow-100 p-5 rounded-full">
                             <HiExclamationCircle className="h-6 w-6 text-yellow-500" />
                         </div>
                     </div>
@@ -180,7 +208,7 @@ function Dashboard() {
                             <p className="text-sm font-medium text-gray-500">Revenue Growth</p>
                             <h3 className="text-3xl font-bold text-gray-800">{stats.revenueChange}%</h3>
                         </div>
-                        <div className="bg-purple-100 p-3 rounded-full">
+                        <div className="bg-purple-100 p-5 rounded-full">
                             <HiTrendingUp className="h-6 w-6 text-purple-500" />
                         </div>
                     </div>

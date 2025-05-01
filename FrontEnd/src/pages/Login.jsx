@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Notification from '../components/ui/Notification'
+import api from '../api/api'
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -14,15 +15,25 @@ function Login() {
         e.preventDefault()
         setError('')
         setLoading(true)
-        setTimeout(() => {
+
+        try {
+            const response = await api.post('/auth/login', { email, password })
+    
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user', JSON.stringify(response.data.user))
+    
+            navigate('/')
+        } catch (err) {
+            setError(err.response?.data?.message || 'Login failed')
+        } finally {
             setLoading(false)
-            if (email === 'admin@example.com' && password === 'password') {
-                navigate('/')
-            } else {
-                setError('Invalid email or password')
-            }
-        }, 1000)
+        }
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) navigate('/')
+    }, [])
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">

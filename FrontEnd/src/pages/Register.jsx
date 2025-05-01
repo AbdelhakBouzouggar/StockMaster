@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Notification from '../components/ui/Notification'
+import api from '../api/api'
 
 function Register() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [role, setRole] = useState('employe')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
@@ -17,16 +19,28 @@ function Register() {
         e.preventDefault()
         setError('')
         setSuccess('')
+
         if (password !== confirmPassword) {
-        setError('Passwords do not match')
-        return
+            setError('Passwords do not match')
+            return
         }
+
         setLoading(true)
-        setTimeout(() => {
-        setLoading(false)
-        setSuccess('Registration successful! You can now log in.')
-        setTimeout(() => navigate('/login'), 1500)
-        }, 1200)
+        try {
+            const response = await api.post('/auth/register', {
+                username: name,
+                email,
+                password,
+                role: role,
+            })
+    
+            setSuccess(response.data.message || 'Registration successful')
+            setTimeout(() => navigate('/login'), 1500)
+        } catch (err) {
+            setError(err.response?.data?.message || 'Registration failed')
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -84,6 +98,19 @@ function Register() {
                     onChange={e => setConfirmPassword(e.target.value)}
                     required
                     />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                    <select
+                        value={role}
+                        onChange={e => setRole(e.target.value)}
+                        className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                        required
+                    >
+                        <option value="employe">Employé</option>
+                        <option value="gestionnaire">Gestionnaire</option>
+                        <option value="admin">Admin</option>
+                    </select>
                 </div>
                 <button
                     type="submit"
