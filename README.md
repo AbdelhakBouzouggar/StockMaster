@@ -47,11 +47,19 @@ npm run dev
 
 ### 🧑🌐 BackEnd Responsibilities
 
-**Tech Stack**: 
-**Developer**: Mona
+**Tech Stack**: Laravel
+**Developer**: Mona Souabni
+
 
 **Features**:
--
+```bash
+composer install
+cp .env.exeample .env   
+php artisan key:generate 
+php artisan:migrate
+php artisan install:api
+composer require firebase/php-jwt 
+```
 
 **Tech Stack**: 
 **Developer**: Nadia
