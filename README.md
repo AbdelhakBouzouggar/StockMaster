@@ -54,11 +54,12 @@ npm run dev
 **Features**:
 ```bash
 composer install
-cp .env.exeample .env   
-php artisan key:generate 
-php artisan:migrate
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
 php artisan install:api
-composer require firebase/php-jwt 
+composer require firebase/php-jwt
+php artisan serve
 ```
 
 **Tech Stack**: 
