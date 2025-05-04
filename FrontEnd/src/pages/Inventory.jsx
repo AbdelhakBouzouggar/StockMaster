@@ -110,7 +110,7 @@ function Inventory() {
                 <div className="mt-4 md:mt-0">
                     <button 
                         onClick={handleAddProduct}
-                        className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors  cursor-pointer"
                     >
                         <HiPlus className="mr-2" /> Add Product
                     </button>
@@ -126,7 +126,7 @@ function Inventory() {
                         </div>
                         <input 
                             type="text" 
-                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             placeholder="Search products by name or category..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -135,7 +135,7 @@ function Inventory() {
                         
                         <button 
                         onClick={() => setShowFilters(!showFilters)}
-                        className="flex items-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors"
+                        className="flex items-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors  cursor-pointer"
                         >
                         <HiFilter className="mr-2" /> Filters
                         {showFilters ? <HiOutlineChevronUp className="ml-1" /> : <HiOutlineChevronDown className="ml-1" />}
@@ -155,7 +155,7 @@ function Inventory() {
                                 <select
                                     value={categoryFilter}
                                     onChange={(e) => setCategoryFilter(e.target.value)}
-                                    className="block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                                    className="block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none  cursor-pointer"
                                 >
                                     <option value="">All Categories</option>
                                     {categories.map(category => (
@@ -169,7 +169,7 @@ function Inventory() {
                                 <select
                                     value={statusFilter}
                                     onChange={(e) => setStatusFilter(e.target.value)}
-                                    className="block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                                    className="block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none  cursor-pointer"
                                 >
                                     <option value="">All Statuses</option>
                                     {statuses.map(status => (
@@ -185,7 +185,7 @@ function Inventory() {
                                         setCategoryFilter('')
                                         setStatusFilter('')
                                     }}
-                                    className="px-4 py-2 text-sm text-gray-700 hover:text-blue-600"
+                                    className="px-4 py-2 text-sm text-gray-700 hover:text-blue-600  cursor-pointer"
                                 >
                                     Clear Filters
                                 </button>
@@ -310,13 +310,13 @@ function Inventory() {
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <button 
                                     onClick={() => handleEditProduct(product)}
-                                    className="text-blue-600 hover:text-blue-900 mr-3"
+                                    className="text-blue-600 hover:text-blue-900 mr-3  cursor-pointer"
                                 >
                                     <HiPencil className="h-5 w-5" />
                                 </button>
                                 <button 
                                     onClick={() => handleDeleteProduct(product.id)}
-                                    className="text-red-600 hover:text-red-900"
+                                    className="text-red-600 hover:text-red-900  cursor-pointer"
                                 >
                                     <HiTrash className="h-5 w-5" />
                                 </button>
@@ -364,7 +364,7 @@ function Inventory() {
                         </label>
                         <input
                             type="text"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             placeholder="Enter product name"
                             defaultValue={currentProduct?.name || ''}
                         />
@@ -376,7 +376,7 @@ function Inventory() {
                             Category
                             </label>
                             <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             defaultValue={currentProduct?.category || ''}
                             >
                             <option value="">Select Category</option>
@@ -394,7 +394,7 @@ function Inventory() {
                             <input
                             type="number"
                             step="0.01"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             placeholder="0.00"
                             defaultValue={currentProduct?.price || ''}
                             />
@@ -408,7 +408,7 @@ function Inventory() {
                             </label>
                             <input
                             type="number"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             placeholder="0"
                             defaultValue={currentProduct?.quantity || ''}
                             />
@@ -419,7 +419,7 @@ function Inventory() {
                             Status
                             </label>
                             <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                             defaultValue={currentProduct?.status || 'In Stock'}
                             >
                             {statuses.map(status => (
@@ -468,7 +468,7 @@ function Inventory() {
                     <div className="mt-6 flex justify-end space-x-3">
                         <button
                         onClick={() => setIsModalOpen(false)}
-                        className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
                         >
                         Cancel
                         </button>
@@ -508,7 +508,7 @@ function Inventory() {
                             }
                             setIsModalOpen(false)
                         }}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700"
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 cursor-pointer"
                         >
                         {currentProduct ? 'Save Changes' : 'Add Product'}
                         </button>

@@ -52,7 +52,7 @@ function Settings() {
                     <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`px-4 py-4 flex items-center border-b-2 font-medium text-sm whitespace-nowrap
+                    className={`px-4 py-4 flex items-center border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap
                         ${activeTab === tab.id
                         ? 'border-blue-500 text-blue-600'
                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -80,7 +80,7 @@ function Settings() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Store Name</label>
                         <input
                             type="text"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             defaultValue="StockMaster Inventory"
                         />
                         </div>
@@ -88,7 +88,7 @@ function Settings() {
                         <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Currency</label>
                         <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                             defaultValue="usd"
                         >
                             <option value="usd">USD ($)</option>
@@ -101,7 +101,7 @@ function Settings() {
                         <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Date Format</label>
                         <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                             defaultValue="mdy"
                         >
                             <option value="mdy">MM/DD/YYYY</option>
@@ -114,10 +114,10 @@ function Settings() {
                         <input
                             id="lowStock"
                             type="checkbox"
-                            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
                             defaultChecked
                         />
-                        <label htmlFor="lowStock" className="text-sm text-gray-700">
+                        <label htmlFor="lowStock" className="text-sm text-gray-700 cursor-pointer">
                             Enable low stock alerts
                         </label>
                         </div>
@@ -125,7 +125,7 @@ function Settings() {
                         <div className="flex justify-end">
                         <button
                             type="button"
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center cursor-pointer"
                             onClick={() => notify.success('Changes saved successfully!')}
                         >
                             <HiOutlineSave className="mr-2" />
@@ -232,7 +232,7 @@ function Settings() {
                         <div className="flex justify-end">
                         <button
                             type="button"
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center cursor-pointer"
                             onClick={() => notify.success('Changes saved successfully!')}
                         >
                             <HiOutlineSave className="mr-2" />
@@ -257,7 +257,7 @@ function Settings() {
                         <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Color Theme</label>
                         <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                             defaultValue="blue"
                         >
                             <option value="blue">Blue (Default)</option>
@@ -276,10 +276,10 @@ function Settings() {
                                 id="light-mode"
                                 name="theme-mode"
                                 type="radio"
-                                className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
                                 defaultChecked
                             />
-                            <label htmlFor="light-mode" className="ml-3 text-sm text-gray-700">
+                            <label htmlFor="light-mode" className="ml-3 text-sm text-gray-700 cursor-pointer">
                                 Light Mode
                             </label>
                             </div>
@@ -288,9 +288,9 @@ function Settings() {
                                 id="dark-mode"
                                 name="theme-mode"
                                 type="radio"
-                                className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
                             />
-                            <label htmlFor="dark-mode" className="ml-3 text-sm text-gray-700">
+                            <label htmlFor="dark-mode" className="ml-3 text-sm text-gray-700 cursor-pointer">
                                 Dark Mode
                             </label>
                             </div>
@@ -299,9 +299,9 @@ function Settings() {
                                 id="system-mode"
                                 name="theme-mode"
                                 type="radio"
-                                className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500 cursor-pointer"
                             />
-                            <label htmlFor="system-mode" className="ml-3 text-sm text-gray-700">
+                            <label htmlFor="system-mode" className="ml-3 text-sm text-gray-700 cursor-pointer">
                                 System Default
                             </label>
                             </div>
@@ -311,7 +311,7 @@ function Settings() {
                         <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Sidebar Style</label>
                         <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                             defaultValue="expanded"
                         >
                             <option value="expanded">Expanded by Default</option>
@@ -322,7 +322,7 @@ function Settings() {
                         <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Interface Density</label>
                         <select
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                             defaultValue="comfortable"
                         >
                             <option value="comfortable">Comfortable (Default)</option>
@@ -335,10 +335,10 @@ function Settings() {
                         <input
                             id="animations"
                             type="checkbox"
-                            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
                             defaultChecked
                         />
-                        <label htmlFor="animations" className="text-sm text-gray-700">
+                        <label htmlFor="animations" className="text-sm text-gray-700 cursor-pointer">
                             Enable animations
                         </label>
                         </div>
@@ -346,7 +346,7 @@ function Settings() {
                         <div className="flex justify-end">
                         <button
                             type="button"
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center cursor-pointer"
                             onClick={() => notify.success('Changes saved successfully!')}
                         >
                             <HiOutlineSave className="mr-2" />
@@ -375,19 +375,19 @@ function Settings() {
                             <div className="flex flex-wrap gap-2">
                             <button
                                 type="button"
-                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm"
+                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm cursor-pointer"
                             >
                                 Export as CSV
                             </button>
                             <button
                                 type="button"
-                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm"
+                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm cursor-pointer"
                             >
                                 Export as Excel
                             </button>
                             <button
                                 type="button"
-                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm"
+                                className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm cursor-pointer"
                             >
                                 Export as JSON
                             </button>
@@ -437,7 +437,7 @@ function Settings() {
                             <p className="text-sm text-gray-500">Clear cached data to free up space and refresh the application.</p>
                             <button
                             type="button"
-                            className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm"
+                            className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 text-sm cursor-pointer"
                             >
                             Clear Cache
                             </button>

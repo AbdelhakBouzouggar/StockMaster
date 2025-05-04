@@ -39,7 +39,7 @@ function Header({ toggleSidebar }) {
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={toggleSidebar} 
-                        className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                        className="text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer"
                     >
                         <HiMenuAlt2 className="w-6 h-6" />
                     </button>
@@ -56,7 +56,7 @@ function Header({ toggleSidebar }) {
                     </div>
                     <input 
                         type="text" 
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                         placeholder="Search products, orders..."
                     />
                 </div>
@@ -66,7 +66,7 @@ function Header({ toggleSidebar }) {
                     {/* Notification Bell */}
                     <div className="relative" ref={dropdownRef}>
                         <button
-                            className="text-gray-500 hover:text-gray-700 relative"
+                            className="text-gray-500 hover:text-gray-700 relative cursor-pointer"
                             onClick={() => setDropdownOpen((open) => !open)}
                         >
                             <HiBell className="w-6 h-6" />
@@ -114,7 +114,7 @@ function Header({ toggleSidebar }) {
                 <div className="fixed inset-0 flex items-center justify-center z-50" style={{ background: 'rgba(0,0,0,0.15)' }}>
                     <div className="bg-white rounded-lg shadow-lg p-6 w-80 relative">
                         <button
-                            className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+                            className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 cursor-pointer"
                             onClick={() => setSelectedNotifi(null)}
                             aria-label="Close"
                         >
@@ -123,7 +123,7 @@ function Header({ toggleSidebar }) {
                         <div className="mb-4 text-lg font-semibold">Notification</div>
                         <div className="mb-6 text-gray-700">{selectedNotifi.message}</div>
                         <button
-                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full flex items-center justify-center gap-2"
+                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full flex items-center justify-center gap-2 cursor-pointer"
                             onClick={() => handleRemove(selectedNotifi.id)}
                             aria-label="Remove Notification"
                         >

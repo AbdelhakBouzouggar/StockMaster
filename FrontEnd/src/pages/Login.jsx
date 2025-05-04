@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Notification from '../components/ui/Notification'
-import api from '../api/api'
+import authApi from '../api/authApi'
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -17,10 +17,11 @@ function Login() {
         setLoading(true)
 
         try {
-            const response = await api.post('/auth/login', { email, password })
+            const response = await authApi.post('/auth/login', { email, password })
     
             localStorage.setItem('token', response.data.token)
             localStorage.setItem('user', JSON.stringify(response.data.user))
+            localStorage.setItem('lastEmail', email)
     
             navigate('/')
         } catch (err) {
@@ -31,6 +32,11 @@ function Login() {
     }
 
     useEffect(() => {
+        const lastEmail = localStorage.getItem('lastEmail')
+        if (lastEmail) {
+            setEmail(lastEmail)
+        }
+
         const token = localStorage.getItem('token')
         if (token) navigate('/')
     }, [])
@@ -50,7 +56,7 @@ function Login() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input
                             type="email"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             placeholder="Enter your email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
@@ -61,7 +67,7 @@ function Login() {
                         <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                         <input
                             type="password"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                             placeholder="Enter your password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
@@ -70,7 +76,7 @@ function Login() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                        className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer"
                         disabled={loading}
                     >
                     {loading ? 'Signing in...' : 'Sign In'}

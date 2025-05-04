@@ -220,7 +220,7 @@ function Orders() {
                     </div>
                     <input 
                         type="text" 
-                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
                         placeholder="Search by order ID or customer name..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -229,7 +229,7 @@ function Orders() {
                     
                     <button 
                     onClick={() => setShowFilters(!showFilters)}
-                    className="flex items-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors"
+                    className="flex items-center px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors cursor-pointer"
                     >
                     <HiFilter className="mr-2" /> Filters
                     {showFilters ? <HiOutlineChevronUp className="ml-1" /> : <HiOutlineChevronDown className="ml-1" />}
@@ -250,7 +250,7 @@ function Orders() {
                         <select
                             value={statusFilter}
                             onChange={(e) => setStatusFilter(e.target.value)}
-                            className="block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                            className="block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                         >
                             <option value="">All Statuses</option>
                             {orderStatuses.map(status => (
@@ -265,7 +265,7 @@ function Orders() {
                             setSearchTerm('')
                             setStatusFilter('')
                             }}
-                            className="px-4 py-2 text-sm text-gray-700 hover:text-blue-600"
+                            className="px-4 py-2 text-sm text-gray-700 hover:text-blue-600 cursor-pointer"
                         >
                             Clear Filters
                         </button>
@@ -387,7 +387,7 @@ function Orders() {
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
                                 onClick={() => viewOrderDetails(order)}
-                                className="text-blue-600 hover:text-blue-900 flex items-center justify-end"
+                                className="text-blue-600 hover:text-blue-900 flex items-center justify-end cursor-pointer"
                             >
                                 <HiOutlineEye className="h-5 w-5 mr-1" />
                                 <span>View</span>
@@ -444,7 +444,7 @@ function Orders() {
                         </div>
                         <button
                             onClick={() => setSelectedOrder(null)}
-                            className="text-gray-400 hover:text-gray-500"
+                            className="text-gray-400 hover:text-gray-500 cursor-pointer"
                         >
                             <HiOutlineX className="h-6 w-6" />
                         </button>
@@ -472,7 +472,7 @@ function Orders() {
                             <div className="mt-3">
                                 <label className="text-xs font-medium text-gray-700 block mb-1">Update Status</label>
                                 <select
-                                className="block w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                className="block w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
                                 value={selectedOrder.status}
                                 onChange={(e) => updateOrderStatus(selectedOrder.id, e.target.value)}
                                 >
@@ -550,7 +550,7 @@ function Orders() {
                         <div className="mt-6 flex justify-end space-x-3">
                         <button
                             onClick={() => setSelectedOrder(null)}
-                            className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer"
                         >
                             Close
                         </button>
