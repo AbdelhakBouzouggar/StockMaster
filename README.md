@@ -65,49 +65,42 @@ php artisan serve
 **Tech Stack**: 
 **Developer**: Nadia
 
-**Features**:
--🔗 API – Gestion des utilisateurs
-L'application interagit avec un backend via des appels API pour gérer dynamiquement les utilisateurs. Voici les principales actions effectuées :
+# StockMaster - Service Utilisateur
 
-📥 1. Récupération de tous les utilisateurs
-Méthode : GET
+## Aperçu
 
-Route : /api/users
+Le service utilisateur est un composant crucial de l'architecture microservices de StockMaster, responsable de la gestion des utilisateurs, de l'authentification et des autorisations. Ce service fournit les API nécessaires pour créer, lire, mettre à jour et supprimer des informations utilisateur, ainsi que pour gérer les sessions et les rôles des utilisateurs.
 
-Description : Récupère la liste complète des utilisateurs pour l'affichage dans le tableau.
+## Fonctionnalités principales
 
-Utilisé pour : Afficher les utilisateurs dès le chargement du composant.
+- 👤 **Gestion des utilisateurs** (création, modification, suppression)
+- 🔐 **Authentification sécurisée** avec gestion des sessions
+- 👮 **Contrôle d'accès basé sur les rôles** (RBAC)
+- 🔄 **API RESTful** pour l'intégration avec d'autres services
+- 🔒 **Protection CORS** configurée pour votre frontend
 
-➕ 2. Création d’un nouvel utilisateur
-Méthode : POST
+## Technologies utilisées
 
-Route : /api/users
+- **Node.js** avec **Express.js** pour l'API REST
+- **MongoDB** pour le stockage des données utilisateur
+- **JWT** (JSON Web Tokens) pour la gestion de l'authentification
 
-Body : { name, email, password, role, status }
+## Prérequis
 
-Description : Ajoute un utilisateur dans la base de données.
+- Node.js v14+ installé
+- MongoDB accessible (local ou distant)
 
-Utilisé pour : Formulaire de création via une modale ou un bouton Add New User.
+## Installation rapide
 
-✏️ 3. Mise à jour d’un utilisateur
-Méthode : PUT
+```bash
+# Accéder au répertoire du service
+cd user_service
 
-Route : /api/users/:id
+# Installer les dépendances
+npm install
 
-Body : { name?, email?, role?, status? }
-
-Description : Met à jour les informations d’un utilisateur existant.
-
-Utilisé pour : Édition d’un utilisateur via l’icône "modifier".
-
-❌ 4. Suppression d’un utilisateur
-Méthode : DELETE
-
-Route : /api/users/:id
-
-Description : Supprime un utilisateur de la base de données.
-
-Utilisé pour : Icône "poubelle" dans la table.
+# Démarrer le serveur en mode développement
+npm start
 # StockMaster - Service de Notification
 
 ## À propos
