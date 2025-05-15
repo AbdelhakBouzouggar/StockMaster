@@ -108,6 +108,37 @@ Route : /api/users/:id
 Description : Supprime un utilisateur de la base de données.
 
 Utilisé pour : Icône "poubelle" dans la table.
+# StockMaster - Service de Notification
+
+## À propos
+
+Ce service de notification est un composant essentiel de l'architecture microservices de StockMaster. Il permet de recevoir et d'afficher en temps réel les modifications apportées au stock de produits, offrant ainsi une visibilité immédiate sur les opérations d'inventaire.
+
+## Fonctionnalités principales
+
+- 📩 **Réception de notifications** via webhook API
+- ⚡ **Diffusion en temps réel** grâce à Socket.IO
+- 🔔 **Interface utilisateur intuitive** pour visualiser l'historique des notifications
+- 🔄 **Support pour différents types d'opérations** (ajout, retrait de produits)
+- 📱 **Design responsive** adapté aux ordinateurs et appareils mobiles
+
+## Architecture technique
+
+Le service de notification est développé avec les technologies suivantes :
+- **Next.js** avec **TypeScript** pour une expérience de développement optimale
+- **Socket.IO** pour les communications en temps réel
+- **Chakra UI** pour une interface utilisateur moderne et responsive
+
+## Installation rapide
+
+```bash
+# Installer les dépendances
+npm install
+
+# Créer un fichier .env.local (voir exemple dans .env.example)
+
+# Lancer le serveur de développement
+npm run dev
 
 **Tech Stack**: Authentification
 **Developer**: Bouzouggar Abdelhak
