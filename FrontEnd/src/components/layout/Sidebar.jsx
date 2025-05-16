@@ -1,7 +1,10 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiViewGrid, HiArchive, HiShoppingCart, HiCog, HiUsers, HiChartBar,HiChevronLeft,HiChevronRight,HiUserCircle } from 'react-icons/hi'
+import { MdSyncAlt } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi"
+import { FaHistory } from 'react-icons/fa';
+
 
 function Sidebar({ isOpen, toggleSidebar }) {
     const navigate = useNavigate()
@@ -17,6 +20,8 @@ function Sidebar({ isOpen, toggleSidebar }) {
         employe: [
             { name: 'Inventory', icon: HiArchive, path: '/inventory' },
             { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
+            { name: 'Movements', icon: MdSyncAlt, path: '/movements' },
+            { name: 'Historique', icon: FaHistory, path: '/historique' },
         ],
         gestionnaire: [
             { name: 'Inventory', icon: HiArchive, path: '/inventory' },
@@ -24,6 +29,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
             { name: 'Reports', icon: HiChartBar, path: '/reports' },
             { name: 'Users', icon: HiUsers, path: '/users' },
             { name: 'Settings', icon: HiCog, path: '/settings' },
+            { name: 'Historique', icon: FaHistory, path: '/historique' },
         ],
         admin: [
             { name: 'Users', icon: HiUsers, path: '/users' },

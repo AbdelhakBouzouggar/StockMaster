@@ -13,7 +13,8 @@ import PrivateRoute from './components/auth/PrivateRoute'
 import Unauthorized from './pages/Unauthorized'
 import NotFound from './pages/NotFound'
 import PublicRoute from './components/auth/PublicRoute'
-
+import StockMovementForm from './pages/StockMovementForm'
+import HistoriqueMovments from './pages/HistoriqueMovments'
 function App() {
     return (
         <Router>
@@ -34,6 +35,8 @@ function App() {
                     <Route path="/" element={<Layout />}>
                         <Route path="/inventory" element={<Inventory />} />
                         <Route path="/orders" element={<Orders />} />
+                        <Route path="/movements" element={<StockMovementForm />} />
+                        <Route path="/historique" element={<HistoriqueMovments />} />
                     </Route>
                 </Route>
 
