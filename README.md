@@ -102,6 +102,7 @@ npm install
 # Démarrer le serveur en mode développement
 npm start
 # StockMaster - Service de Notification
+```
 
 ## À propos
 
