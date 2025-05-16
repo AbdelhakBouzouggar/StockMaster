@@ -5,15 +5,34 @@ import { FiLogOut } from "react-icons/fi"
 
 function Sidebar({ isOpen, toggleSidebar }) {
     const navigate = useNavigate()
-    const menuItems = [
+    const user = JSON.parse(localStorage.getItem('user'))
+    const role = user?.role || 'employe'
+
+    const commonItems = [
         { name: 'Dashboard', icon: HiViewGrid, path: '/' },
-        { name: 'Inventory', icon: HiArchive, path: '/inventory' },
-        { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
-        { name: 'Users', icon: HiUsers, path: '/users' },
-        { name: 'Reports', icon: HiChartBar, path: '/reports' },
         { name: 'Profile', icon: HiUserCircle, path: '/profile' },
-        { name: 'Settings', icon: HiCog, path: '/settings' },
     ]
+
+    const roleBasedItems = {
+        employe: [
+            { name: 'Inventory', icon: HiArchive, path: '/inventory' },
+            { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
+        ],
+        gestionnaire: [
+            { name: 'Inventory', icon: HiArchive, path: '/inventory' },
+            { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
+            { name: 'Reports', icon: HiChartBar, path: '/reports' },
+            { name: 'Users', icon: HiUsers, path: '/users' },
+            { name: 'Settings', icon: HiCog, path: '/settings' },
+        ],
+        admin: [
+            { name: 'Users', icon: HiUsers, path: '/users' },
+            { name: 'Reports', icon: HiChartBar, path: '/reports' },
+            { name: 'Settings', icon: HiCog, path: '/settings' },
+        ]
+    }
+
+    const menuItems = [...commonItems, ...(roleBasedItems[role] || [])]
 
     const handleLogout = () => {
         localStorage.removeItem("token")
@@ -43,7 +62,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
                 
                 <button 
                     onClick={toggleSidebar} 
-                    className="p-1 rounded-full hover:bg-blue-600 focus:outline-none"
+                    className="p-1 rounded-full hover:bg-blue-600 focus:outline-none cursor-pointer"
                 >
                     {isOpen ? <HiChevronLeft className="w-5 h-5" /> : <HiChevronRight className="w-5 h-5" />}
                 </button>

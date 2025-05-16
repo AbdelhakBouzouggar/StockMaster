@@ -182,7 +182,7 @@ function Profile() {
                             <div className="flex space-x-2">
                             <button 
                                 onClick={handleCancel}
-                                className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                                className="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none transition-colors cursor-pointer"
                             >
                                 <HiX className="mr-1.5 h-4 w-4" />
                                 Cancel
@@ -190,7 +190,7 @@ function Profile() {
                             
                             <button 
                                 onClick={handleSave}
-                                className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                                className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-colors cursor-pointer"
                             >
                                 <HiSave className="mr-1.5 h-4 w-4" />
                                 Save
@@ -199,7 +199,7 @@ function Profile() {
                         ) : (
                             <button 
                             onClick={handleEdit}
-                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                            className="inline-flex items-center px-3 py-1.5 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-colors cursor-pointer"
                             >
                             <HiPencil className="mr-1.5 h-4 w-4" />
                             Edit
@@ -324,7 +324,7 @@ function Profile() {
                         <div>
                             <button
                             type="submit"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-colors cursor-pointer"
                             >
                             <HiSave className="mr-2 h-5 w-5" />
                             Update Password
@@ -409,7 +409,7 @@ function Profile() {
                                 <label htmlFor="theme" className="block text-sm text-gray-700">Theme</label>
                                 <select
                                 id="theme"
-                                className="mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                                 defaultValue="system"
                                 >
                                 <option value="light">Light</option>
@@ -422,7 +422,7 @@ function Profile() {
                                 <label htmlFor="language" className="block text-sm text-gray-700">Language</label>
                                 <select
                                 id="language"
-                                className="mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="mt-1 pl-3 pr-10 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                                 defaultValue="en"
                                 >
                                 <option value="en">English</option>
@@ -437,7 +437,7 @@ function Profile() {
                         <div className="pt-4">
                             <button
                             type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none transition-colors cursor-pointer"
                             onClick={() => notify.success('Preferences saved successfully!')}
                             >
                             <HiSave className="mr-2 h-5 w-5" />
