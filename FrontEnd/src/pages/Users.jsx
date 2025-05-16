@@ -3,6 +3,8 @@ import { HiUserAdd, HiPencil, HiTrash, HiSearch, HiFilter, HiUserCircle } from '
 import { motion } from 'framer-motion'
 import { useNotification } from '../context/NotificationContext'
 import { userService } from '../api/userApi'
+import Spinner from '../components/layout/Spinner'
+import laravelApi from '../api/laravelApi'
 
 function Users() {
     const [users, setUsers] = useState([])
@@ -87,7 +89,12 @@ function Users() {
 
     const handleAddUser = async (formData) => {
         try {
-            const response = await userService.create(formData)
+            let response
+            if (isAdmin) {
+                response = await userService.create(formData)
+            } else {
+                response = await laravelApi.post('/users', formData)
+            }
 
             const newUser = {
                 id: response.userId,
@@ -96,6 +103,7 @@ function Users() {
             
             setUsers([...users, newUser])
             setShowAddModal(false)
+            fetchUsers()
             notify.success('Utilisateur ajouté avec succès!')
         } catch (error) {
             notify.error('Erreur lors de l\'ajout de l\'utilisateur')
@@ -107,7 +115,11 @@ function Users() {
         if (!currentUser) return
         
         try {
-            await userService.update(currentUser.id, formData)
+            if (isAdmin) {
+                await userService.update(currentUser.id, formData)
+            } else {
+                await laravelApi.put(`/users/${currentUser.id}`, formData)
+            }
             
             setUsers(users.map(u => 
                 u.id === currentUser.id
@@ -117,6 +129,7 @@ function Users() {
             
             setShowEditModal(false)
             setCurrentUser(null)
+            fetchUsers()
             notify.success('Utilisateur mis à jour avec succès!')
         } catch (error) {
             notify.error('Erreur lors de la mise à jour de l\'utilisateur')
@@ -159,64 +172,10 @@ function Users() {
             animate="visible"
             className="py-6"
         >
-            <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
-                <div>
-                <h1 className="text-2xl font-bold text-gray-800">User Management</h1>
-                <p className="text-gray-600">Manage system users, roles and permissions</p>
-                </div>
-                <motion.button
-                variants={itemVariants}
-                onClick={handleAdd}
-                className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
-                >
-                <HiUserAdd className="mr-2 h-5 w-5" />
-                Add New User
-                </motion.button>
-            </div>
-            
-            {/* Filters */}
-            <motion.div 
-                variants={itemVariants}
-                className="bg-white rounded-lg shadow-sm p-4 mb-6"
-            >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div className="relative flex-grow max-w-md">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <HiSearch className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                    type="text"
-                    placeholder="Search users..."
-                    className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-4">
-                    <div className="relative">
-                    <select
-                        value={filterRole}
-                        onChange={(e) => setFilterRole(e.target.value)}
-                        className="pl-3 pr-8 py-2 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                    >
-                        <option value="All">All Roles</option>
-                        <option value="admin">Admin</option>
-                        <option value="gestionnaire">Gestionnaire</option>
-                        <option value="employe">Employe</option>
-                    </select>
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                        <HiFilter className="h-5 w-5 text-gray-400" />
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </motion.div>
-
             {/* État de chargement ou d'erreur */}
             {loading && (
                 <div className="bg-white rounded-lg shadow-sm p-10 text-center">
-                    <p className="text-gray-600">Chargement des utilisateurs...</p>
+                    <Spinner />
                 </div>
             )}
 
@@ -234,107 +193,177 @@ function Users() {
             
             {/* Users Table */}
             {!loading && !error &&(
-                <motion.div 
-                    variants={itemVariants}
-                    className="bg-white rounded-lg shadow-sm overflow-hidden"
-                >
-                    <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
-                        <tr>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            User
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Role
-                            </th>
-                            <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                        {paginatedUsers.map((user) => (
-                            <tr key={user.id} className="hover:bg-gray-50">
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <div className="flex items-center">
-                                <div className="flex-shrink-0 h-10 w-10">
-                                    <HiUserCircle className="h-10 w-10 text-gray-400" />
-                                </div>
-                                <div className="ml-4">
-                                    <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                                    <div className="text-sm text-gray-500">{user.email}</div>
-                                </div>
-                                </div>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap">
-                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 
-                                user.role === 'gestionnaire' ? 'bg-blue-100 text-blue-800' : 
-                                'bg-green-100 text-green-800'
-                                }`}>
-                                {user.role}
-                                </span>
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button 
-                                onClick={() => handleEdit(user)}
-                                className="text-blue-600 hover:text-blue-900 mr-4 cursor-pointer"
-                                >
-                                <HiPencil className="h-5 w-5" />
-                                </button>
-                                <button 
-                                onClick={() => handleDelete(user.id)}
-                                className="text-red-600 hover:text-red-900 cursor-pointer"
-                                >
-                                <HiTrash className="h-5 w-5" />
-                                </button>
-                            </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                <>
+                    <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                    <h1 className="text-2xl font-bold text-gray-800">User Management</h1>
+                    <p className="text-gray-600">Manage system users, roles and permissions</p>
                     </div>
-                    {filteredUsers.length === 0 ? (
-                        <div className="text-center py-10 text-gray-500">
-                            No users found matching the current filters.
+                    <motion.button
+                    variants={itemVariants}
+                    onClick={handleAdd}
+                    className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+                    >
+                    <HiUserAdd className="mr-2 h-5 w-5" />
+                    Add New User
+                    </motion.button>
+                    </div>
+                    
+                    {/* Filters */}
+                    <motion.div 
+                        variants={itemVariants}
+                        className="bg-white rounded-lg shadow-sm p-4 mb-6"
+                    >
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div className="relative flex-grow max-w-md">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <HiSearch className="h-5 w-5 text-gray-400" />
+                            </div>
+                            <input
+                            type="text"
+                            placeholder="Search users..."
+                            className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            />
                         </div>
-                    ) : (
-                        <div className="flex justify-between items-center px-6 py-3 bg-gray-50">
-                            <p className="text-sm text-gray-600">
-                                Showing {(currentPage - 1) * userPerPage + 1} to {Math.min(currentPage * userPerPage, filteredUsers.length)} of {filteredUsers.length} entries
-                            </p>
-                            <div className="flex space-x-2">
-                                <button
-                                    onClick={goToPrevPage}
-                                    disabled={currentPage === 1}
-                                    className="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-600 disabled:opacity-50"
-                                >
-                                    Previous
-                                </button>
-                                {[...Array(totalPages)].map((_, i) => (
-                                    <button
-                                        key={i + 1}
-                                        onClick={() => goToPage(i + 1)}
-                                        className={`px-3 py-1 border rounded text-sm ${currentPage === i + 1
-                                            ? 'bg-blue-600 text-white'
-                                            : 'bg-white text-gray-600 border-gray-300'
-                                            }`}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                ))}
-                                <button
-                                    onClick={goToNextPage}
-                                    disabled={currentPage === totalPages}
-                                    className="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-600 disabled:opacity-50"
-                                >
-                                    Next
-                                </button>
+                        
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="relative">
+                            <select
+                                value={filterRole}
+                                onChange={(e) => setFilterRole(e.target.value)}
+                                className="pl-3 pr-8 py-2 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                            >
+                                <option value="All">All Roles</option>
+                                <option value="admin">Admin</option>
+                                <option value="gestionnaire">Gestionnaire</option>
+                                <option value="employe">Employe</option>
+                            </select>
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                <HiFilter className="h-5 w-5 text-gray-400" />
+                            </div>
                             </div>
                         </div>
-                    )}
-                </motion.div>
+                        </div>
+                    </motion.div>
+
+                    <motion.div 
+                        variants={itemVariants}
+                        className="bg-white rounded-lg shadow-sm overflow-hidden"
+                    >
+                        <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                            <tr>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                User
+                                </th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Role
+                                </th>
+                                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                            {paginatedUsers.map((user) => (
+                                <tr key={user.id} className="hover:bg-gray-50">
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    <div className="flex items-center">
+                                    <div className="flex-shrink-0 h-10 w-10">
+                                        <HiUserCircle className="h-10 w-10 text-gray-400" />
+                                    </div>
+                                    <div className="ml-4">
+                                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                                        <div className="text-sm text-gray-500">{user.email}</div>
+                                    </div>
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                    user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 
+                                    user.role === 'gestionnaire' ? 'bg-blue-100 text-blue-800' : 
+                                    'bg-green-100 text-green-800'
+                                    }`}>
+                                    {user.role}
+                                    </span>
+                                </td>
+                                {user.role === "employe" && userRole === "gestionnaire" && (<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button 
+                                    onClick={() => handleEdit(user)}
+                                    className="text-blue-600 hover:text-blue-900 mr-4 cursor-pointer"
+                                    >
+                                    <HiPencil className="h-5 w-5" />
+                                    </button>
+                                    <button 
+                                    onClick={() => handleDelete(user.id)}
+                                    className="text-red-600 hover:text-red-900 cursor-pointer"
+                                    >
+                                    <HiTrash className="h-5 w-5" />
+                                    </button>
+                                </td>)}
+                                {user.role === "gestionnaire" && userRole === "admin" && (<td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button 
+                                    onClick={() => handleEdit(user)}
+                                    className="text-blue-600 hover:text-blue-900 mr-4 cursor-pointer"
+                                    >
+                                    <HiPencil className="h-5 w-5" />
+                                    </button>
+                                    <button 
+                                    onClick={() => handleDelete(user.id)}
+                                    className="text-red-600 hover:text-red-900 cursor-pointer"
+                                    >
+                                    <HiTrash className="h-5 w-5" />
+                                    </button>
+                                </td>)}
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                        </div>
+                        {filteredUsers.length === 0 ? (
+                            <div className="text-center py-10 text-gray-500">
+                                No users found matching the current filters.
+                            </div>
+                        ) : (
+                            <div className="flex justify-between items-center px-6 py-3 bg-gray-50">
+                                <p className="text-sm text-gray-600">
+                                    Showing {(currentPage - 1) * userPerPage + 1} to {Math.min(currentPage * userPerPage, filteredUsers.length)} of {filteredUsers.length} entries
+                                </p>
+                                <div className="flex space-x-2">
+                                    <button
+                                        onClick={goToPrevPage}
+                                        disabled={currentPage === 1}
+                                        className="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-600 disabled:opacity-50"
+                                    >
+                                        Previous
+                                    </button>
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            onClick={() => goToPage(i + 1)}
+                                            className={`px-3 py-1 border rounded text-sm ${currentPage === i + 1
+                                                ? 'bg-blue-600 text-white'
+                                                : 'bg-white text-gray-600 border-gray-300'
+                                                }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                    <button
+                                        onClick={goToNextPage}
+                                        disabled={currentPage === totalPages}
+                                        className="px-3 py-1 bg-white border border-gray-300 rounded text-sm text-gray-600 disabled:opacity-50"
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </motion.div>
+                </>
             )}
             
             {showConfirmModal && (
@@ -362,9 +391,14 @@ function Users() {
                             <button
                                 onClick={async () => {
                                     try {
-                                        await userService.delete(userToDelete)
+                                        if (isAdmin) {
+                                            await userService.delete(userToDelete)
+                                        } else {
+                                            await laravelApi.delete(`/users/${userToDelete}`)
+                                        }
                                         setUsers(users.filter(user => user.id !== userToDelete))
                                         notify.success('Utilisateur supprimé avec succès!')
+                                        fetchUsers()
                                     } catch (error) {
                                         notify.error('Erreur lors de la suppression de l\'utilisateur')
                                         console.error(error)
@@ -403,7 +437,6 @@ function Users() {
                         const name = form.name.value.trim()
                         const email = form.email.value.trim()
                         const password = form.password.value.trim()
-                        const role = !isAdmin ? form.role.value : 'gestionnaire'
 
                         if (!name || !email || !password) {
                             notify.error('Please fill in all required fields.')
@@ -414,7 +447,6 @@ function Users() {
                             name,
                             email,
                             password,
-                            role
                         })
                     }}>
                         <div>
@@ -454,20 +486,6 @@ function Users() {
                         />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                        {!isAdmin && (<div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Role
-                            </label>
-                            <select
-                            name="role"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
-                            defaultValue="Staff"
-                            >
-                            <option value="admin">Admin</option>
-                            <option value="gestionnaire">Gestionnaire</option>
-                            <option value="employe">Employe</option>
-                            </select>
-                        </div>)}
                         </div>
                         <div className="mt-6 flex justify-end space-x-3">
                         <button
@@ -513,7 +531,6 @@ function Users() {
                         const oldPassword = form.oldPassword.value.trim()
                         const newPassword = form.newPassword.value.trim()
                         const confirmPassword = form.confirmPassword.value.trim()
-                        const role = !isAdmin ? form.role.value : 'gestionnaire'
 
                         if (!name || !email) {
                             notify.error('Please fill in all required fields.')
@@ -536,7 +553,6 @@ function Users() {
                             email,
                             oldPassword,
                             newPassword,
-                            role
                         }
                         
                         handleUpdateUser(userData)
@@ -597,20 +613,6 @@ function Users() {
                             />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                        {!isAdmin && (<div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Role
-                            </label>
-                            <select
-                            name="role"
-                            className="block w-full p-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 focus:outline-none cursor-pointer"
-                            defaultValue={currentUser.role}
-                            >
-                            <option value="admin">Admin</option>
-                            <option value="gestionnaire">Gestionnaire</option>
-                            <option value="employe">Employe</option>
-                            </select>
-                        </div>)}
                         </div>
                         <div className="mt-6 flex justify-end space-x-3">
                         <button

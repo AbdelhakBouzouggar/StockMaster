@@ -20,6 +20,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
         ],
         gestionnaire: [
             { name: 'Inventory', icon: HiArchive, path: '/inventory' },
+            { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
             { name: 'Reports', icon: HiChartBar, path: '/reports' },
             { name: 'Users', icon: HiUsers, path: '/users' },
             { name: 'Settings', icon: HiCog, path: '/settings' },

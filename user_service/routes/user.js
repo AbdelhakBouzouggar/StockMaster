@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/', (req, res) => {
-    const sql = 'SELECT * FROM users where role = "gestionnaire"'
+    const sql = 'SELECT * FROM users'
 
     db.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: err.message })

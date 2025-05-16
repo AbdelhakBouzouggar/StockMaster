@@ -55,4 +55,15 @@ class OrderController extends Controller
 
         return response()->json($order->load(['user', 'orderItems.produit']), 201);
     }
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:Pending,Processing,Shipped,Delivered,Cancelled'
+        ]);
+
+        $order->update(['status' => $validated['status']]);
+
+        return response()->json($order->load(['user', 'orderItems.produit']));
+    }
 }

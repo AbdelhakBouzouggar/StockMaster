@@ -22,7 +22,19 @@ class ProduitController extends Controller
             'categorie_id' => 'required|exists:categories,id'
         ]);
 //
-        return Produit::create($validated);
+        $product = Produit::create($validated);
+
+        if ($product->quantite == 0) {
+            $product->status = 'Out of Stock';
+        } elseif ($product->quantite < 10) {
+            $product->status = 'Low Stock';
+        } else {
+            $product->status = 'In Stock';
+        }
+
+        $product->saveQuietly();
+
+        return $product;
     }
 
     public function show(Produit $produit)
@@ -42,6 +54,16 @@ class ProduitController extends Controller
         ]);
 
         $produit->update($validated);
+
+        if ($produit->quantite == 0) {
+            $produit->status = 'Out of Stock';
+        } elseif ($produit->quantite < 10) {
+            $produit->status = 'Low Stock';
+        } else {
+            $produit->status = 'In Stock';
+        }
+
+        $produit->saveQuietly();
 
         return $produit;
     }
