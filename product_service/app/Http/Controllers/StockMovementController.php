@@ -11,7 +11,7 @@ class StockMovementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'produit_id' => 'required|exists:produits,id',
+            'produit_id' => 'required|exists:products,id',
             'type_mouvement' => 'required|in:entrée,sortie,ajustement,transfert',
             'quantite' => 'required|integer',
             'commentaire' => 'nullable|string',
@@ -31,6 +31,6 @@ class StockMovementController extends Controller
 
     public function index()
     {
-        return StockMovement::with(['produit', 'utilisateur'])->latest()->get();
+        return StockMovement::with(['product', 'utilisateur'])->latest()->get();
     }
-}//
+}

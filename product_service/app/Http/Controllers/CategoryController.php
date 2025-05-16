@@ -18,7 +18,7 @@ class CategoryController extends Controller
             'nom' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
-//
+
         $category = Category::create($validated);
 
         return response()->json($category, 201);

@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Produit;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProduitController extends Controller
 {
     public function index()
     {
-        return Produit::with('category')->get();
+        return Product::with('category')->get();
     }
 
     public function store(Request $request)
@@ -21,8 +21,8 @@ class ProduitController extends Controller
             'image' => 'nullable|image',
             'categorie_id' => 'required|exists:categories,id'
         ]);
-//
-        $product = Produit::create($validated);
+
+        $product = Product::create($validated);
 
         if ($product->quantite == 0) {
             $product->status = 'Out of Stock';
@@ -37,12 +37,12 @@ class ProduitController extends Controller
         return $product;
     }
 
-    public function show(Produit $produit)
+    public function show(Product $produit)
     {
         return $produit->load('category');
     }
 
-    public function update(Request $request, Produit $produit)
+    public function update(Request $request, Product $produit)
     {
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
@@ -68,7 +68,7 @@ class ProduitController extends Controller
         return $produit;
     }
 
-    public function destroy(Produit $produit)
+    public function destroy(Product $produit)
     {
         $produit->delete();
 

@@ -11,7 +11,7 @@ class OrderItem extends Model
     use HasFactory;
     protected $table = "ordersitems";
     protected $fillable = [
-        'oder_id',
+        'order_id',
         'product_id',
         'quantite',
         'prix_unitaire'
@@ -28,8 +28,8 @@ class OrderItem extends Model
     /**
      * Le produit lié à cet article de commande.
      */
-    public function produit(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(Produit::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

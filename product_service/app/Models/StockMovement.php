@@ -14,10 +14,10 @@ class StockMovement extends Model
         'date_mouvement',
         'commentaire',
     ];
-//
-    public function produit()
+
+    public function product()
     {
-        return $this->belongsTo(Produit::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function utilisateur()

@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('ordersitems', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('oder_id')->nullable()->constrained('orders')->onDelete('set null');
+            $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('set null');
             $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('set null');
             $table->integer('quantite')->nullable();
             $table->integer('prix_unitaire')->nullable();
             $table->timestamps();
-
         });
     }
 

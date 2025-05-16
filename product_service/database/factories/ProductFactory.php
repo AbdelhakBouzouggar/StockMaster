@@ -3,15 +3,15 @@
 namespace Database\Factories;
 
 use App\Models\Category;
-use App\Models\Produit;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Produit>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
-class ProduitFactory extends Factory
+class ProductFactory extends Factory
 {
-    protected $model = Produit::class;
+    protected $model = Product::class;
 
     public function definition(): array
     {
@@ -27,9 +27,9 @@ class ProduitFactory extends Factory
 
     public function configure()
     {
-        return $this->afterMaking(function (Produit $product) {
+        return $this->afterMaking(function (Product $product) {
             //
-        })->afterCreating(function (Produit $product) {
+        })->afterCreating(function (Product $product) {
             if ($product->quantite == 0) {
                 $product->status = 'Out of Stock';
             } elseif ($product->quantite < 10) {

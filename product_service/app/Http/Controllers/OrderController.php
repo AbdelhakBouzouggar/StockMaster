@@ -10,13 +10,13 @@ class OrderController extends Controller
 {
     public function index()
     {
-        return Order::with(['user', 'orderItems.produit'])->get();
+        return Order::with(['user', 'orderItems.product'])->get();
     }
 
     // Récupérer une commande spécifique avec les détails
     public function show(Order $order)
     {
-        return $order->load(['user', 'orderItems.produit']);
+        return $order->load(['user', 'orderItems.product']);
     }
 
     public function store(Request $request)
@@ -46,14 +46,14 @@ class OrderController extends Controller
         // Création des articles de commande
         foreach ($validated['ordersitems'] as $item) {
             OrderItem::create([
-                'oder_id' => $order->id,
+                'order_id' => $order->id,
                 'product_id' => $item['product_id'],
                 'quantite' => $item['quantite'],
                 'prix_unitaire' => $item['prix_unitaire'],
             ]);
         }
 
-        return response()->json($order->load(['user', 'orderItems.produit']), 201);
+        return response()->json($order->load(['user', 'orderItems.product']), 201);
     }
 
     public function updateStatus(Request $request, Order $order)
@@ -64,6 +64,6 @@ class OrderController extends Controller
 
         $order->update(['status' => $validated['status']]);
 
-        return response()->json($order->load(['user', 'orderItems.produit']));
+        return response()->json($order->load(['user', 'orderItems.product']));
     }
 }

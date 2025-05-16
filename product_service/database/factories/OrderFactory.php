@@ -32,7 +32,7 @@ class OrderFactory extends Factory
             $orderItems = OrderItem::factory()
                 ->count($this->faker->numberBetween(1, 5))
                 ->create([
-                    'oder_id' => $order->id,
+                    'order_id' => $order->id,
                 ]);
 
             $total = $orderItems->sum(fn($item) => $item->prix_unitaire * $item->quantite);

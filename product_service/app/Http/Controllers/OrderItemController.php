@@ -11,7 +11,7 @@ class OrderItemController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'oder_id' => 'required|exists:orders,id',
+            'order_id' => 'required|exists:orders,id',
             'product_id' => 'required|exists:products,id',
             'quantite' => 'required|integer|min:1',
             'prix_unitaire' => 'required|numeric|min:0',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,5 @@ use App\Http\Controllers\StockMovementController;
 // Route::middleware(['verify.jwt', 'role:employe'])->group(function () {
     Route::put('stock-mouvements/{id}', [StockMovementController::class, 'update']);
 // });
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
