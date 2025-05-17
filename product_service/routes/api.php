@@ -14,10 +14,10 @@ use App\Http\Controllers\StockMovementController;
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('produits', ProduitController::class);
     // Route::apiResource('order-items', OrderItemController::class)->only(['store', 'update', 'destroy']);
-    
+
     Route::apiResource('users', UserController::class);
     // });
-    
+
     // Route::middleware(['verify.jwt', 'role:gestionnaire,employe'])->group(function () {
         Route::get('stock-movements', [StockMovementController::class, 'index']);
         Route::apiResource('orders', OrderController::class)->only(['index', 'show']);
@@ -27,13 +27,11 @@ use App\Http\Controllers\StockMovementController;
         Route::put('orders/{order}/status', [OrderController::class, 'updateStatus']);
 // });
 // Route::middleware(['verify.jwt', 'role:employe'])->group(function () {
-<<<<<<< HEAD
+
     Route::put('stock-mouvements/{id}', [StockMovementController::class, 'update']);
 // });
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
-=======
-    Route::put('stock-movements/{id}', [StockMovementController::class, 'update']);
-    Route::post('stock-movements', [StockMovementController::class, 'store']);
+Route::put('stock-movements/{id}', [StockMovementController::class, 'update']);
+Route::post('stock-movements', [StockMovementController::class, 'store']);
 // });
->>>>>>> origin/mona

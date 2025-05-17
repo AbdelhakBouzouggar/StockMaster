@@ -5,10 +5,9 @@ const TITLES = {
     '/': 'Dashboard | StockMaster',
     '/inventory': 'Inventory | StockMaster',
     '/orders': 'Orders | StockMaster',
+    '/movements': 'Stock Movements | StockMaster',
+    '/historique': 'Stock History | StockMaster',
     '/users': 'Users | StockMaster',
-    '/reports': 'Reports | StockMaster',
-    '/profile': 'Profile | StockMaster',
-    '/settings': 'Settings | StockMaster',
     '/login': 'Login | StockMaster',
     '/register': 'Register | StockMaster',
 }

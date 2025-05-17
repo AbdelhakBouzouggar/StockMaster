@@ -191,6 +191,10 @@ function Orders() {
             return 'bg-gray-100 text-gray-800'
         }
     }
+
+    const user = JSON.parse(localStorage.getItem('user'))
+    const userRole = user?.role || 'employe'
+    const isEmploye = userRole === 'employe'
     
     return (
         <motion.div
@@ -520,6 +524,7 @@ function Orders() {
                                     onChange={(e) => {
                                         updateOrderStatus(selectedOrder.id, e.target.value)
                                     }}
+                                    disabled={!isEmploye|| false}
                                     >
                                     {orderStatuses.map(status => (
                                         <option key={status} value={status}>{status}</option>

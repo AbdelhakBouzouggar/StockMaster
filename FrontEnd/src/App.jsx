@@ -3,10 +3,7 @@ import Layout from './components/layout/Layout'
 import Dashboard from './pages/Dashboard'
 import Inventory from './pages/Inventory'
 import Orders from './pages/Orders'
-import Settings from './pages/Settings'
 import Users from './pages/Users'
-import Reports from './pages/Reports'
-import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import PrivateRoute from './components/auth/PrivateRoute'
@@ -27,29 +24,26 @@ function App() {
                 <Route element={<PrivateRoute />}>
                     <Route path="/" element={<Layout />}>
                         <Route index element={<Dashboard />} />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/inventory" element={<Inventory />} />
+                        <Route path="/orders" element={<Orders />} />
                     </Route>
                 </Route>
 
-                <Route element={<PrivateRoute allowedRoles={['employe', 'gestionnaire']} />}>
+                <Route element={<PrivateRoute allowedRoles={['employe', 'admin']} />}>
                     <Route path="/" element={<Layout />}>
-                        <Route path="/inventory" element={<Inventory />} />
-                        <Route path="/orders" element={<Orders />} />
                         <Route path="/movements" element={<StockMovementForm />} />
-                        <Route path="/historique" element={<HistoriqueMovments />} />
                     </Route>
                 </Route>
 
                 <Route element={<PrivateRoute allowedRoles={['gestionnaire', 'admin']} />}>
                     <Route path="/" element={<Layout />}>
-                        <Route path="/reports" element={<Reports />} />
                         <Route path="/users" element={<Users />} />
-                        <Route path="/settings" element={<Settings />} />
                     </Route>
                 </Route>
 
-                <Route element={<PrivateRoute allowedRoles={['admin']} />}>
+                <Route element={<PrivateRoute allowedRoles={['gestionnaire']} />}>
                     <Route path="/" element={<Layout />}>
+                        <Route path="/historique" element={<HistoriqueMovments />} />
                         <Route path="/users" element={<Users />} />
                     </Route>
                 </Route>

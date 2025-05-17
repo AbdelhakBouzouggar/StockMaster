@@ -174,7 +174,7 @@ function Users() {
         >
             {/* État de chargement ou d'erreur */}
             {loading && (
-                <div className="bg-white rounded-lg shadow-sm p-10 text-center">
+                <div className="flex justify-center items-center h-40">
                     <Spinner />
                 </div>
             )}

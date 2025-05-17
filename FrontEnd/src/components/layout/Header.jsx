@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { HiMenuAlt2, HiBell, HiOutlineSearch, HiUserCircle, HiTrash, HiX } from 'react-icons/hi'
-import React, { useState, useRef, useEffect } from 'react'
+import { HiMenuAlt2, HiBell, HiOutlineSearch, HiTrash, HiX } from 'react-icons/hi'
+import { useState, useRef, useEffect } from 'react'
 
 function Header({ toggleSidebar }) {
     const [notifications, setNotifications] = useState([
@@ -100,12 +100,6 @@ function Header({ toggleSidebar }) {
                                 )}
                             </div>
                         )}
-                    </div>
-                    
-                    <div className="relative">
-                        <Link to="/profile" className="flex items-center focus:outline-none">
-                            <HiUserCircle className="w-8 h-8 text-gray-700" />
-                        </Link>
                     </div>
                 </div>
             </div>

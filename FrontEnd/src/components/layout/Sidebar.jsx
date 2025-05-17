@@ -1,9 +1,10 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HiViewGrid, HiArchive, HiShoppingCart, HiCog, HiUsers, HiChartBar,HiChevronLeft,HiChevronRight,HiUserCircle } from 'react-icons/hi'
+import { HiViewGrid, HiArchive, HiShoppingCart, HiUsers , HiChevronLeft, HiChevronRight } from 'react-icons/hi'
 import { MdSyncAlt } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi"
 import { FaHistory } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 
 
 function Sidebar({ isOpen, toggleSidebar }) {
@@ -13,28 +14,21 @@ function Sidebar({ isOpen, toggleSidebar }) {
 
     const commonItems = [
         { name: 'Dashboard', icon: HiViewGrid, path: '/' },
-        { name: 'Profile', icon: HiUserCircle, path: '/profile' },
+        { name: 'Inventory', icon: HiArchive, path: '/inventory' },
+        { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
     ]
 
     const roleBasedItems = {
         employe: [
-            { name: 'Inventory', icon: HiArchive, path: '/inventory' },
-            { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
             { name: 'Movements', icon: MdSyncAlt, path: '/movements' },
-            { name: 'Historique', icon: FaHistory, path: '/historique' },
         ],
         gestionnaire: [
-            { name: 'Inventory', icon: HiArchive, path: '/inventory' },
-            { name: 'Orders', icon: HiShoppingCart, path: '/orders' },
-            { name: 'Reports', icon: HiChartBar, path: '/reports' },
-            { name: 'Users', icon: HiUsers, path: '/users' },
-            { name: 'Settings', icon: HiCog, path: '/settings' },
             { name: 'Historique', icon: FaHistory, path: '/historique' },
+            { name: 'Users', icon: HiUsers, path: '/users' },
         ],
         admin: [
+            { name: 'Movements', icon: MdSyncAlt, path: '/movements' },
             { name: 'Users', icon: HiUsers, path: '/users' },
-            { name: 'Reports', icon: HiChartBar, path: '/reports' },
-            { name: 'Settings', icon: HiCog, path: '/settings' },
         ]
     }
 
@@ -45,6 +39,24 @@ function Sidebar({ isOpen, toggleSidebar }) {
         localStorage.removeItem("user")
         localStorage.removeItem("welcomeNotificationDismissed")
         navigate('/login')
+    }
+
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const checkIsMobile = () => {
+            setIsMobile(window.innerWidth < 768)
+        }
+
+        checkIsMobile()
+        window.addEventListener('resize', checkIsMobile)
+        return () => window.removeEventListener('resize', checkIsMobile)
+    }, [])
+
+    const handleNavLinkClick = () => {
+        if (isMobile && isOpen) {
+            toggleSidebar()
+        }
     }
 
     return (
@@ -80,6 +92,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
                     <li key={item.name}>
                         <NavLink
                             to={item.path}
+                            onClick={handleNavLinkClick}
                             className={({ isActive }) => 
                                 `flex items-center px-4 py-3 rounded-lg transition-colors ${
                                 isActive 
