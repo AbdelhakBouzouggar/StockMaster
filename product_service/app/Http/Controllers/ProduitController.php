@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\RabbitMQService;
 
 class ProduitController extends Controller
 {
@@ -24,6 +26,7 @@ class ProduitController extends Controller
 
         $product = Product::create($validated);
 
+        // Set status based on stock level
         if ($product->quantite == 0) {
             $product->status = 'Out of Stock';
         } elseif ($product->quantite < 10) {
@@ -33,6 +36,18 @@ class ProduitController extends Controller
         }
 
         $product->saveQuietly();
+
+        // Publish to RabbitMQ if stock is low
+        if (in_array($product->status, ['Low Stock', 'Out of Stock'])) {
+            $rabbit = new RabbitMQService();
+            $rabbit->publish('notifications', [
+                'event' => 'stock.low',
+                'product_id' => $product->id,
+                'quantite' => $product->quantite,
+                'status' => $product->status,
+                'timestamp' => now()
+            ]);
+        }
 
         return $product;
     }
@@ -55,6 +70,7 @@ class ProduitController extends Controller
 
         $produit->update($validated);
 
+        // Set status based on updated quantity
         if ($produit->quantite == 0) {
             $produit->status = 'Out of Stock';
         } elseif ($produit->quantite < 10) {
@@ -65,6 +81,17 @@ class ProduitController extends Controller
 
         $produit->saveQuietly();
 
+        if (in_array($produit->status, ['Low Stock', 'Out of Stock'])) {
+            $rabbit = new RabbitMQService();
+            $rabbit->publish('notifications', [
+                'event' => 'stock.low',
+                'product_id' => $produit->id,
+                'quantite' => $produit->quantite,
+                'status' => $produit->status,
+                'timestamp' => now()
+            ]);
+        }
+
         return $produit;
     }
 
@@ -74,4 +101,4 @@ class ProduitController extends Controller
 
         return response()->json(['message' => 'Produit supprimé.']);
     }
-    }
+}

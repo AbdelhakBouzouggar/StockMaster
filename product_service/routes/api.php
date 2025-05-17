@@ -35,3 +35,6 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::put('stock-movements/{id}', [StockMovementController::class, 'update']);
 Route::post('stock-movements', [StockMovementController::class, 'store']);
 // });
+    Route::put('stock-movements/{id}', [StockMovementController::class, 'update']);
+    Route::post('stock-movements', [StockMovementController::class, 'store']);
+// });
