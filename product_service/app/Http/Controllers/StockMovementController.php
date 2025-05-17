@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use App\Models\StockMovement;
+use App\Services\RabbitMQService;
 use Illuminate\Support\Facades\Auth;
 
 class StockMovementController extends Controller
 {
-<<<<<<< HEAD
-    public function store(Request $request)
+    public function index()
     {
-        $request->validate([
-            'produit_id' => 'required|exists:products,id',
-            'type_mouvement' => 'required|in:entrée,sortie,ajustement,transfert',
-            'quantite' => 'required|integer',
-            'commentaire' => 'nullable|string',
-        ]);
-=======
+        return StockMovement::with(['product', 'utilisateur'])->latest()->get();
+    }
    public function store(Request $request)
 {
     $request->validate([
@@ -27,9 +23,8 @@ class StockMovementController extends Controller
         'quantite' => 'required|integer|min:1',
         'commentaire' => 'nullable|string',
     ]);
->>>>>>> origin/mona
 
-    $produit = Produit::findOrFail($request->produit_id);
+    $produit = Product::findOrFail($request->produit_id);
 
     switch ($request->type_mouvement) {
         case 'entrée':
@@ -59,17 +54,21 @@ class StockMovementController extends Controller
             'date_mouvement' => now(),
             'commentaire' => $request->commentaire,
         ]);
+        $product = Product::find($request->produit_id);
+
+    $rabbit = new RabbitMQService();
+    $rabbit->publish('notifications', [
+        'event' => 'stock.movement',
+        'produit_id' => $product->id,
+        'name' => $product->name,
+        'type_mouvement' => $request->type_mouvement,
+        'quantite' => $request->quantite,
+        'utilisateur_id' => $request->utilisateur_id
+    ]);
 
         return response()->json(['message' => 'Mouvement enregistré avec succès.'], 201);
     }
 
-    public function index()
-    {
-        return StockMovement::with(['product', 'utilisateur'])->latest()->get();
-    }
-<<<<<<< HEAD
-}
-=======
 
     public function update(Request $request, $id)
 {
@@ -81,7 +80,7 @@ class StockMovementController extends Controller
     ]);
 
     $movement = StockMovement::findOrFail($id);
-    $produit = Produit::findOrFail($movement->produit_id); 
+    $produit = Product::findOrFail($movement->produit_id); // the original product
 
     switch ($movement->type_mouvement) {
         case 'entrée':
@@ -91,11 +90,12 @@ class StockMovementController extends Controller
             $produit->quantite += $movement->quantite;
             break;
         case 'ajustement':
+            // nothing to revert safely; handled below
             break;
     }
 
     if ($movement->produit_id != $request->produit_id) {
-        $newProduit = Produit::findOrFail($request->produit_id);
+        $newProduit = Product::findOrFail($request->produit_id);
     } else {
         $newProduit = $produit;
     }
@@ -133,9 +133,19 @@ class StockMovementController extends Controller
         'utilisateur_id' => $request->utilisateur_id ,
         'date_mouvement' => now(),
     ]);
+     $product = Product::find($request->produit_id);
+
+    $rabbit = new RabbitMQService();
+    $rabbit->publish('notifications', [
+        'event' => 'stock.movement',
+        'produit_id' => $product->id,
+        'name' => $product->name,
+        'type_mouvement' => $request->type_mouvement,
+        'quantite' => $request->quantite,
+        'utilisateur_id' => $request->utilisateur_id
+    ]);
 
     return response()->json(['message' => 'Mouvement mis à jour avec succès.']);
 }
 
 }
->>>>>>> origin/mona

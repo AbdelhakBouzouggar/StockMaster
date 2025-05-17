@@ -27,13 +27,10 @@ use App\Http\Controllers\StockMovementController;
         Route::put('orders/{order}/status', [OrderController::class, 'updateStatus']);
 // });
 // Route::middleware(['verify.jwt', 'role:employe'])->group(function () {
-<<<<<<< HEAD
     Route::put('stock-mouvements/{id}', [StockMovementController::class, 'update']);
 // });
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
-=======
     Route::put('stock-movements/{id}', [StockMovementController::class, 'update']);
     Route::post('stock-movements', [StockMovementController::class, 'store']);
 // });
->>>>>>> origin/mona

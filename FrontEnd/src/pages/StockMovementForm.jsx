@@ -39,6 +39,7 @@ function StockMovementForm() {
     try {
       const res = await axios.get("http://localhost:8000/api/stock-movements");
       setMouvements(res.data);
+      console.log(res.data)
     } catch (err) {
       console.error("Erreur de chargement des mouvements", err);
     }
@@ -193,7 +194,7 @@ function StockMovementForm() {
         className="p-4 border rounded shadow-sm flex justify-between items-center"
       >
         <div>
-          <p className="font-medium">{mvt.produit?.name || "Produit inconnu"}</p>
+          <p className="font-medium">{mvt.product?.name || "Produit inconnu"}</p>
           <p>{mvt.type_mouvement} | {mvt.quantite} unités</p>
           <p className="text-sm text-gray-500">
             {new Date(mvt.date_mouvement).toLocaleString()}
