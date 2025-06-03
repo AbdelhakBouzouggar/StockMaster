@@ -1,16 +1,37 @@
 import { Link } from 'react-router-dom'
 import { HiMenuAlt2, HiBell, HiOutlineSearch, HiTrash, HiX } from 'react-icons/hi'
 import { useState, useRef, useEffect } from 'react'
+import { useNotification } from '../../context/NotificationContext'
+import axios from 'axios'
 
 function Header({ toggleSidebar }) {
-    const [notifications, setNotifications] = useState([
-        { id: 1, message: 'Order #1234 has been shipped.' },
-        { id: 2, message: 'New product added: Wireless Mouse.' },
-        { id: 3, message: 'Stock for item #5678 is low.' },
-    ])
+    const [notifications, setNotifications] = useState([])
+    const [error, setError] = useState(null)
+
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [selectedNotifi, setSelectedNotifi] = useState(null)
     const dropdownRef = useRef(null)
+
+    const { notify } = useNotification()
+
+    const fetchNotifications = async () => {
+        try {
+            const data = await axios.get('http://localhost:5003/notifications')
+
+            const notifications = data.data
+            console.log(notifications)
+            setNotifications(notifications)
+            setError(null)
+        } catch (err) {
+            setError('Erreur lors du chargement des noifications')
+            notify.error('Impossible de charger les noifications')
+            console.error(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchNotifications()
+    }, [])
 
     useEffect(() => {
         function handleClickOutside(event) {

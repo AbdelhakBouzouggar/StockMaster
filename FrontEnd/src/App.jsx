@@ -12,7 +12,7 @@ import NotFound from './pages/NotFound'
 import PublicRoute from './components/auth/PublicRoute'
 import StockMovementForm from './pages/StockMovementForm'
 import HistoriqueMovments from './pages/HistoriqueMovments'
-import StockMovements from './pages/StockMovements'
+
 function App() {
     return (
         <Router>
@@ -30,8 +30,7 @@ function App() {
                     </Route>
                 </Route>
 
-                <Route element={<PrivateRoute allowedRoles={['employe', 'gestionnaire']} />}>
-                    <Route path="/StockMovements" element={<StockMovements />} />
+                <Route element={<PrivateRoute allowedRoles={['employe', 'admin']} />}>
                     <Route path="/" element={<Layout />}>
                         <Route path="/movements" element={<StockMovementForm />} />
                     </Route>
@@ -46,7 +45,6 @@ function App() {
                 <Route element={<PrivateRoute allowedRoles={['gestionnaire']} />}>
                     <Route path="/" element={<Layout />}>
                         <Route path="/historique" element={<HistoriqueMovments />} />
-                        <Route path="/users" element={<Users />} />
                     </Route>
                 </Route>
 

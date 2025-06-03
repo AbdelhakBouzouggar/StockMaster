@@ -32,14 +32,18 @@ connectRabbitMQ();
 
 // 🧾 GET notifications
 app.get('/notifications', async (req, res) => {
-  const notifications = await Notification.find().sort({ createdAt: -1 });
-  res.json(notifications);
+  try {
+    const notifications = await Notification.find().sort({ timestamp: -1 });
+    res.json(notifications);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
 });
 // 🧾 GET notifications par utilisateur
 app.get('/notifications/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
-    const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
+    const notifications = await Notification.find({ userId }).sort({ timestamp: -1 });
     res.json(notifications);
   } catch (err) {
     console.error('Erreur récupération notifications:', err);

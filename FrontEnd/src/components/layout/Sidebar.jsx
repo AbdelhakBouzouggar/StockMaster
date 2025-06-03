@@ -1,11 +1,10 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiViewGrid, HiArchive, HiShoppingCart, HiUsers , HiChevronLeft, HiChevronRight } from 'react-icons/hi'
-import { MdSyncAlt } from "react-icons/md";
+import { MdSyncAlt } from "react-icons/md"
 import { FiLogOut } from "react-icons/fi"
-import { FaHistory } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
-
+import { FaHistory } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
 
 function Sidebar({ isOpen, toggleSidebar }) {
     const navigate = useNavigate()

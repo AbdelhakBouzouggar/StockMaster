@@ -346,7 +346,7 @@ function Users() {
                                             onClick={() => goToPage(i + 1)}
                                             className={`px-3 py-1 border rounded text-sm ${currentPage === i + 1
                                                 ? 'bg-blue-600 text-white'
-                                                : 'bg-white text-gray-600 border-gray-300'
+                                                : 'bg-white text-gray-600'
                                                 }`}
                                         >
                                             {i + 1}
